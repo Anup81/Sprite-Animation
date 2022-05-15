@@ -1,5 +1,11 @@
 const canvas = document.getElementById("canvas1");
 
+let playerState = "fall";
+const dropdown = document.getElementById("animations");
+dropdown.addEventListener("change", function (e) {
+  playerState = e.target.value;
+});
+
 const ctx = canvas.getContext("2d");
 console.log(ctx);
 
@@ -13,6 +19,7 @@ const spriteWidth = 575; //Width Divide by Number
 const spriteHeight = 523; //Height Divide by Number
 // let frameX = 0;
 // let frameY = 0;
+
 let gameFrame = 0;
 const staggerFrames = 5; // Variable Declared for Slowing the animation used in the line 35.
 const spriteAnimations = [];
@@ -24,6 +31,34 @@ const animationStates = [
   {
     name: "jump",
     frames: 7,
+  },
+  {
+    name: "fall",
+    frames: 7,
+  },
+  {
+    name: "run",
+    frames: 9,
+  },
+  {
+    name: "dizzy",
+    frames: 11,
+  },
+  {
+    name: "sit",
+    frames: 5,
+  },
+  {
+    name: "roll",
+    frames: 7,
+  },
+  {
+    name: "ko",
+    frames: 7,
+  },
+  {
+    name: "getHit",
+    frames: 4,
   },
 ];
 
@@ -47,11 +82,12 @@ function animate() {
   //   ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dy); // S - source, D - Destination
 
   let position =
-    Math.floor(gameFrame / staggerFrames) % spriteAnimations["jump"].loc.length; //We'll have to increase the game frame 5 times i.e 1/5 = 0.2, 2/5 = 0.4, 3/5 = 0.6...5/5 = 1
+    Math.floor(gameFrame / staggerFrames) %
+    spriteAnimations[playerState].loc.length; //We'll have to increase the game frame 5 times i.e 1/5 = 0.2, 2/5 = 0.4, 3/5 = 0.6...5/5 = 1
   // And 1%6 = 1
 
   let frameX = spriteWidth * position;
-  let frameY = spriteAnimations["jump"].loc[position].y;
+  let frameY = spriteAnimations[playerState].loc[position].y;
   ctx.drawImage(
     playerImage,
     frameX,
